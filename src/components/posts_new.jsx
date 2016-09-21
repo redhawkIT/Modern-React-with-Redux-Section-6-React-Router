@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {reduxForm, Field} from 'redux-form' // kinda like connect
+import {reduxForm} from 'redux-form' // kinda like connect
+import {createPost} from '../actions/index'
 
 class PostsNew extends Component {
   render() {
@@ -7,7 +8,7 @@ class PostsNew extends Component {
     // const title = this.props.fields.title
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(this.props.createPost)}>
         <h3>Create A New Post</h3>
         <div className='form-group'>
           <label>Title</label>
@@ -29,11 +30,13 @@ class PostsNew extends Component {
     )
   }
 }
+// connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
+// reduxForm: 1st is from config, 2nd is mapStatetoProps, 3rd is mapDispatchToProps
 
 export default reduxForm({
   form: 'PostsNewForm',
   fields: ['title', 'categories', 'content'] // watch for these inputs
-})(PostsNew)
+}, null, {createPost})(PostsNew)
 
 // user types somthing in ... record it on application state
 
