@@ -5,13 +5,14 @@ import { createStore, applyMiddleware } from 'redux'
 import { Router, browserHistory } from 'react-router'
 import reducers from './reducers'
 import routes from './routes'
+import promise from 'redux-promise'
 
 // www.blog.com/post/5
 // whenever /post/5 changes browserHistory tells react-router to update
 
 // hashHistory /# everything after the hash
 
-const createStoreWithMiddleware = applyMiddleware()(createStore)
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore)
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
