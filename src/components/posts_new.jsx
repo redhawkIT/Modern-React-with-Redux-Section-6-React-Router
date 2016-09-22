@@ -1,15 +1,34 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {reduxForm} from 'redux-form' // kinda like connect
 import {createPost} from '../actions/index'
 import {Link} from 'react-router'
 
 class PostsNew extends Component {
+  // Context
+  // Occasionally, you want to pass data through the component tree without
+  // having to pass the props down manually at every level.
+  // React's "context" feature lets you do this.
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  onSubmit(props) {
+    // action creator that creates a promise
+    this.props.createPost(props).then(() => {
+      // blog post has been created, navigate the user to the index
+      // we navigate by calling this.context.router.path with the
+      // new path to navigate to
+      this.context.router.push('/')
+    })
+  }
+
   render() {
     const { fields: {title, categories, content}, handleSubmit} = this.props
     // const title = this.props.fields.title
 
     return (
-      <form onSubmit={handleSubmit(this.props.createPost)}>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <h3>Create A New Post</h3>
 
         <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
