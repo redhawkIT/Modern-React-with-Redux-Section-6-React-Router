@@ -2,8 +2,9 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {fetchPost, deletePost} from '../actions/index'
 import {Link} from 'react-router'
+
 class PostsShow extends Component {
-  
+
   static contextTypes = {
     router: PropTypes.object
   }
@@ -39,8 +40,12 @@ class PostsShow extends Component {
   }
 }
 
+// Connects a React component to a Redux store.
 function mapStateToProps(state) {
   return {post: state.posts.post}
 }
 
-export default connect(mapStateToProps, {fetchPost, deletePost})(PostsShow)
+// (Object or Function): If an object is passed, each function inside it will be assumed to be a Redux action creator
+const mapDispatchToProps = {fetchPost, deletePost}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsShow)
